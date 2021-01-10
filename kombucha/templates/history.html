@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="input-group">
+<img src="static/img/MascotFunny.png" class="img-small left" alt="Scoby Stan Funny Face"> 
+</div>
+<a class="nav-item nav-link text-right" href="{{ url_for('edithistory') }}">Edit</a>
+    {% for post in posts.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+            <small class="text-primary">1st Fermentation</small><br>
+              <a>Post Date: {{ post.date_posted.strftime('%m-%d-%Y') }}</a> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a>End Date:{{ post.end_date.strftime('%m-%d-%Y') }}</a>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <a>Batch ID: {{ post.identification }} </a> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </div>   
+            <div>
+            <p class="article-content"> <span class="">{{ post.notes }} </span>
+            </p>
+        
+          </div>
+        
+      
+  <!--2nd Ferm-->
+  <small class="text-success" onclick="displayData(11,1,0,'A')" onmouseover="" style="cursor: pointer;" data-toggle="collapse" data-target="#{{ post.identification }}" aria-expanded="false" aria-controls="collapseExample">
+    2nd Fermentation
+  </small>
+  
+  {% for secondpost in secondposts.items %}
+   {% if secondpost.first == post.identification %}
+  {% if secondpost.user_id == current_user.id %}
+<div class="collapse" id="{{ secondpost.first }}">
+  <div class="card card-body">
+          <div class="media-body">
+            <div class="article-metadata">
+              <small>Start Date: {{ secondpost.date_posted.strftime('%m-%d-%Y') }}</small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <small>End Date:{{ secondpost.end_date.strftime('%m-%d-%Y') }}</small>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <small> Amount: {{ secondpost.amount }} </small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <small> Rating: {{ secondpost.rating }}</small>
+            </div> 
+            <a class="border rounded col px-md-3">Flavoring: {{ secondpost.flavoring }} </a><br><br>
+            <a>Notes: {{ secondpost.notes }} </a>
+             </div>
+</div>
+    {% endif %}
+    {% endif%}
+  {% endfor %} 
+    
+</article>
+<br>
+      
+  {% endfor %}
+
+    </fieldset>
+
+{% endblock content %}
+ 
+ 
+   

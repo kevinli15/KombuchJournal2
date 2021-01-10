@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+<img src="static/img/MascotDead.png" class="img-small left" alt="Scoby Stan Funny Face"> 
+<small>Note: deleting a first fermentation entry also deletes any second fermentation entries associated!</small> 
+    {% for post in posts.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+            <div class="input-group">
+            <small class="text-primary">1st Fermentation</small>&nbsp&nbsp <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+            <input class="btn btn-danger btn-sm m-1" type="submit" value="Delete">
+            <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
+            </form>
+            </div>
+              <small class="text-muted">Post Date: {{ post.date_posted.strftime('%m-%d-%Y') }}</small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <small class="text-muted">End Date:{{ post.end_date.strftime('%m-%d-%Y') }}</small>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <small class="text-muted">Batch ID: {{ post.identification }} </small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          
+            </div>
+    <fieldset class="form-group">   
+            <div>
+            <p class="article-content"> {{ post.notes }} 
+            </p>
+        
+          </div>
+      
+          <!--2nd Ferm-->
+  <small class="text-success" onclick="displayData(11,1,0,'A')" onmouseover="" style="cursor: pointer;" data-toggle="collapse" data-target="#2ndFerm" aria-expanded="false" aria-controls="collapseExample">
+    2nd Fermentation
+  </small>
+</p>
+  {% for secondpost in secondposts.items %}
+    {% if secondpost.first == post.identification %}
+    {% if secondpost.user_id == current_user.id %}
+          <div class="media-body">
+            <div class="article-metadata">
+              <small class="text-muted">Post Date: {{ secondpost.date_posted.strftime('%m-%d-%Y') }}</small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <small class="text-muted">End Date:{{ secondpost.end_date.strftime('%m-%d-%Y') }}</small>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <small class="text-muted">Batch ID: {{ secondpost.notes }} </small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('update_2nd', post_id=secondpost.id) }}">Update</a>
+            </div> 
+    {% endif %}
+    {% endif %}
+  {% endfor %}   
+        </article>
+       <p>
+    {% endfor %}
+
+    </fieldset>
+
+    {{ firsts }}
+    
+{% endblock content %}

@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="input-group">
+    <a href="{{ url_for('new_post') }}">
+        <button class="btn btn-success btn-sm">1st Fermentation</button>
+    </a>
+    &nbsp&nbsp&nbsp&nbsp
+    <a href="{{ url_for('secondferm') }}">
+        <button class="btn btn-primary btn-sm">2nd Fermentation</button>
+    </a>
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="../static/img/MascotDis.png" class="img-smaller left" alt="Scoby Stan Funny Face"> 
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="../static/img/MascotFace.png" class="img-smaller left" alt="Scoby Stan Funny Face"> 
+</div>
+    <small>To add a rating, create a 2nd Fermentation entry first, then go to History and edit your post!</small>
+    <br>
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+            <select class="form-control" name="firstID">
+                <option disabled selected value="">1st Fermentation ID</option>
+                    {% for post in posts %}
+                        <option value="{{ post.identification }}">{{ post.identification }}</option>
+                    {% endfor %}
+            </select>
+            <br>
+                <div class="input-group">
+                    {% if form.amount.errors %}
+                        {{ form.amount(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.amount.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.amount(class="form-control", placeholder="Quantity (i.e. 3 bottles)")  }}
+                    {% endif %} 
+                    &nbsp&nbsp&nbsp&nbsp
+                    {% if form.date_posted.errors %}
+                        {{ form.date_posted(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.date_posted.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                    {% else %}
+                        {{ form.date_posted(class="form-control", placeholder="Start Date (M/D/YYYY)") }}
+                    {% endif %}
+                    &nbsp&nbsp&nbsp
+                    {% if form.end_date.errors %}
+                        {{ form.end_date(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.end_date.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div> 
+                    {% else %}
+                        {{ form.end_date(class="form-control", placeholder="End Date (M/D/YYYY)") }}
+                    {% endif %}
+                </div> &nbsp
+                
+                <div>
+                <br>
+                {{ form.flavoring(class="form-control", placeholder="Flavoring") }}
+                </div>
+                                <div>
+                <br>
+                {{ form.notes(class="form-control", placeholder="Notes") }}
+                </div>
+            </fieldset>
+            <br>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-primary") }}
+            </div>
+        </form>
+    </div> 
+{% endblock %}

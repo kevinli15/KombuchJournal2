@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <br>
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+                    <div class="input-group">
+                        <small class="text-muted"> Orignal Batch Id: {{ post.identification }}</small>  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <small class="text-muted">Orignal Start Date: {{ post.date_posted.strftime('%m/%d/%Y') }}</small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <small class="text-muted">Orignal End Date: {{ post.end_date.strftime('%m/%d/%Y') }}</small>
+                    </div>
+                <div class="input-group">
+                    {% if form.identification.errors %}
+                        {{ form.identification(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.identification.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.identification(class="form-control", placeholder="Batch Identification")  }}
+                    {% endif %} 
+                    &nbsp&nbsp&nbsp&nbsp
+                    {% if form.date_posted.errors %}
+                        {{ form.date_posted(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.date_posted.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                    {% else %}
+                        {{ form.date_posted(class="form-control", placeholder="Start Date (M/D/YYYY)") }}
+                    {% endif %}
+                    &nbsp&nbsp&nbsp
+                    {% if form.end_date.errors %}
+                        {{ form.end_date(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.end_date.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div> 
+                    {% else %}
+                        {{ form.end_date(class="form-control", placeholder="End Date (M/D/YYYY)") }}
+                    {% endif %}
+                </div> &nbsp
+                <div>
+                <br>
+                {{ form.notes(class="form-control", placeholder="Notes") }}
+                </div>
+            </fieldset>
+            <br>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-primary") }}
+            </div>
+        </form>
+    </div> 
+{% endblock %}

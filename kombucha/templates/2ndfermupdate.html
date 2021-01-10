@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block content %}
+    <br>
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+
+                <div class="input-group">
+                        <small class="text-muted">Start Date: {{ post.date_posted.strftime('%m/%d/%Y') }}</small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <small class="text-muted">End Date: {{ post.end_date.strftime('%m/%d/%Y') }}</small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <small class="text-muted"> Amount</small>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <small class="text-muted">Rate your brew!</small>  
+                        
+                    </div>
+                <div class="input-group">
+                    {% if form.date_posted.errors %}
+                        {{ form.date_posted(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.date_posted.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                    {% else %}
+                        {{ form.date_posted(class="form-control", placeholder="Start Date (M/D/YYYY)") }}
+                    {% endif %}
+                    &nbsp&nbsp
+                    {% if form.end_date.errors %}
+                        {{ form.end_date(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.end_date.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div> 
+                    {% else %}
+                        {{ form.end_date(class="form-control", placeholder="End Date (M/D/YYYY)") }}
+                    {% endif %}
+                    &nbsp&nbsp
+                                        {% if form.amount.errors %}
+                        {{ form.amount(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.amount.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.amount(class="form-control", placeholder="Quantity (i.e. 3 bottles)")  }}
+                    {% endif %} 
+                    &nbsp&nbsp
+                    {{ form.rating(class="form-control", placeholder="Rating") }}
+                </div>
+
+                
+                <div>
+                
+                <br>
+                <small class="text-muted">Flavoring:</small>
+                <br>
+                {{ form.flavoring(class="form-control", placeholder="Flavoring") }}
+                </div>
+                                <div>
+                <br>
+                <small class="text-muted">Notes:</small> 
+                <br>
+                {{ form.notes(class="form-control", placeholder="Notes") }}
+                </div>
+            </fieldset>
+            <br>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-primary") }}
+            </div>
+        </form>
+    </div> 
+{% endblock %}
